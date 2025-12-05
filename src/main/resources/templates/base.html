@@ -71,47 +71,27 @@
          transform: translateX(-50%);
        top: 420px;   /* image ke neeche se curve start */
          width: 100%;
-        height: 700px;  /* jitna neeche tak le jana ho utna badha sakti ho */
+        height: 530px;  /* jitna neeche tak le jana ho utna badha sakti ho */
         background: linear-gradient(90deg,#b3e5ff,#d2b8ff);
         border-radius: 180px 180px 0 0; /* full round top */
          box-shadow: 0 -6px 20px rgba(0,0,0,0.15);
          z-index: -1;
              }
-              /* Left big blue bubble */
-.bubble-left {
-    width: 260px;
-    height: 260px;
-    background: #1f5ccf;
-    left: 40px;
-
-    /* bubble upar shift */
-    top: 60px;
-
-    /* image ke neeche 1/4 overlap */
-    transform: translateY(40px);
+              /* Purple Block */
+.purple-block {
+    position: absolute;
+    top: 120px;      /* ✔ upar laane ke liye */
+    right: 40px;     /* ✔ right side shift */
+    display: flex;
+    flex-direction: column;
+    gap: 100px;       /* ✔ dono boxes ke beech gap */
 }
 
-/* Right purple bubble (same rahega) */
-.bubble-right {
-    width: 320px;
-    height: 320px;
-    background: #6b3ccc;
-    right: 20px;
-    top: 20px;
-}
-
-/* Center bubble → thoda LEFT shift */
-.bubble-small {
-    width: 150px;
-    height: 150px;
-    background: #134fb8;
-
-    /* beech se left move */
-    left: 40%;
-    transform: translateX(50%);
-
-    /* thoda upar bhi */
-    top: 90px;
+.blue-block {
+    width: 110px;    /* ✔ size chota */
+    height: 140px;   /* ✔ height choti */
+    border-radius: 20px;
+    background: linear-gradient(135deg, #6a5cff, #3a2cff);
 }
 
 
