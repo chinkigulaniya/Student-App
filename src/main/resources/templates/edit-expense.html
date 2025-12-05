@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="base :: head"></head>
+
+<body>
+
+<header th:replace="base :: navbar"></header>
+
+<div class="container mt-5">
+    <div class="card shadow p-4" style="max-width: 500px; margin: auto;">
+        <h3 class="text-center mb-4">Edit Expense</h3>
+
+        <form th:action="@{/expenses/update}" th:object="${expense}" method="post">
+
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{student.id}">
+
+
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control mb-3" th:field="*{title}" required>
+
+            <label class="form-label">Amount</label>
+            <input type="number" step="0.01" class="form-control mb-3" th:field="*{amount}" required>
+
+            <label class="form-label">Category</label>
+            <input type="text" class="form-control mb-3" th:field="*{category}" required>
+
+            <label class="form-label">Date</label>
+            <input type="date" class="form-control mb-3" th:field="*{date}" required>
+
+            <label class="form-label">Note</label>
+            <textarea class="form-control mb-3" th:field="*{note}"></textarea>
+
+            <button class="btn btn-primary w-100">Update Expense</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

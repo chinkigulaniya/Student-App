@@ -1,34 +1,94 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="base :: body">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:replace="base :: head"></head>
 
 <body>
 
-<h2 class="mb-3">Edit Student</h2>
+<!-- NAVBAR + LAYOUT -->
+<div th:replace="base :: navbar"></div>
 
-<form th:action="@{/students/update/{id}(id=${student.id})}" method="post">
+<!-- PAGE CONTENT START -->
+<div class="container mt-4">
+    <div class="card card-ghost p-4">
 
-    <div class="mb-3">
-        <label>Name:</label>
-        <input type="text" name="name" class="form-control"
-               th:value="${student.name}" required>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h3 class="mb-0">✏ Edit Student</h3>
+                <p class="small-muted mb-0">Update details and click Save.</p>
+            </div>
+            <div>
+                <a th:href="@{/students}" class="btn btn-outline-secondary">Back to list</a>
+            </div>
+        </div>
+
+        <form th:action="@{|/students/update/${student.id}|}" th:object="${student}" method="post">
+
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label class="form-label required">Name</label>
+                    <input th:field="*{name}" class="form-control" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label required">Email</label>
+                    <input th:field="*{email}" type="email" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label required">Phone</label>
+                    <input th:field="*{phone}" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label required">Course</label>
+                    <input th:field="*{course}" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label required">Gender</label>
+                    <select th:field="*{gender}" class="form-select">
+                        <option value="">-- Select --</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Date of Birth</label>
+                    <input th:field="*{dob}" type="date" class="form-control" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Enrollment Date</label>
+                    <input th:field="*{enrollmentDate}" type="date" class="form-control" />
+                </div>
+
+                <div class="col-md-12">
+                    <label class="form-label">Notes</label>
+                    <textarea th:field="*{notes}" rows="3" class="form-control"></textarea>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="form-label">Address</label>
+                    <textarea th:field="*{address}" rows="2" class="form-control"></textarea>
+                </div>
+
+                <div class="col-12 d-flex gap-2 justify-content-end">
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                    <button type="submit" class="btn btn-primary-custom">Save Changes</button>
+                </div>
+
+            </div>
+        </form>
+
     </div>
-
-    <div class="mb-3">
-        <label>Email:</label>
-        <input type="email" name="email" class="form-control"
-               th:value="${student.email}" required>
-    </div>
-
-    <div class="mb-3">
-        <label>Course:</label>
-        <input type="text" name="course" class="form-control"
-               th:value="${student.course}" required>
-    </div>
-
-    <button class="btn btn-primary" type="submit">Update</button>
-    <a href="/students" class="btn btn-secondary">Cancel</a>
-
-</form>
+</div>
+<!-- PAGE CONTENT END -->
 
 </body>
 </html>

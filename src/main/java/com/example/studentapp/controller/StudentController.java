@@ -8,49 +8,85 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/students")
 public class StudentController {
 
     @Autowired
     private StudentService studentService;
 
-    // SHOW STUDENT LIST
-    @GetMapping
+    //students.html
+
+    @GetMapping("/students")
+    public  String showStudentImage(){
+        return "students";
+    }
+
+    // ----------------------------
+    // 1️⃣ Student List Page
+    // ----------------------------
+    @GetMapping("/students/list")
     public String listStudents(Model model) {
         model.addAttribute("students", studentService.getAllStudents());
-        return "student-list";
+        return "student-list";  // -> student-list.html
     }
 
-    // SHOW ADD FORM
-    @GetMapping("/add-student")
-    public String showAddForm(Model model) {
+    // ----------------------------
+    // 2️⃣ Add Student Page
+    // ----------------------------
+    @GetMapping("/students/add")
+    public String showAddStudentForm(Model model) {
         model.addAttribute("student", new Student());
-        return "add-student";
+        return "add-student";  // -> add-student.html
     }
 
-    // SAVE NEW STUDENT
-    @PostMapping("/save")
-    public String saveStudent(@ModelAttribute Student student) {
-        studentService.addStudent(student);
+    // ----------------------------
+    // 3️⃣ Save New Student
+    // ----------------------------
+    @PostMapping("/students/save")
+    public String saveStudent(@ModelAttribute("student") Student student) {
+        studentService.save(student);
         return "redirect:/students";
     }
 
-    // SHOW EDIT FORM
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("student", studentService.getStudentById(id));
-        return "edit-student";
+    // ----------------------------
+    // 4️⃣ Edit Page
+    // ----------------------------
+    @GetMapping("/students/edit/{id}")
+    public String editStudentPage(@PathVariable Long id, Model model) {
+        Student s = studentService.getStudentById(id);
+        model.addAttribute("student", s);
+        return "edit-student";   // -> edit-student.html
     }
 
-    // UPDATE STUDENT
-    @PostMapping("/update/{id}")
-    public String updateStudent(@PathVariable Long id, @ModelAttribute Student student) {
-        studentService.updateStudent(id, student);
+    // ----------------------------
+    // 5️⃣ Update Student
+    // ----------------------------
+
+    @PostMapping("/students/update/{id}")
+    public String updateStudent(@PathVariable Long id,
+                                @ModelAttribute("student") Student studentForm) {
+
+        Student existing = studentService.getStudentById(id);
+
+        existing.setName(studentForm.getName());
+        existing.setEmail(studentForm.getEmail());
+        existing.setPhone(studentForm.getPhone());
+        existing.setCourse(studentForm.getCourse());
+        existing.setGender(studentForm.getGender());
+        existing.setDob(studentForm.getDob()); // ✔ small letter
+        existing.setEnrollmentDate(studentForm.getEnrollmentDate()); // ✔ small letter
+        existing.setNotes(studentForm.getNotes());
+        existing.setAddress(studentForm.getAddress());
+
+        studentService.save(existing);
+
         return "redirect:/students";
     }
 
-    // DELETE STUDENT
-    @GetMapping("/delete/{id}")
+
+    // ----------------------------
+    // 6️⃣ Delete Student
+    // ----------------------------
+    @GetMapping("/students/delete/{id}")
     public String deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return "redirect:/students";

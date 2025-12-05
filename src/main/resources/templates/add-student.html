@@ -1,25 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Add Student</title>
-</head>
+
+<!-- HEAD IMPORT -->
+<head th:replace="~{base :: head}"></head>
+
 <body>
 
-<h2>Add Student</h2>
+<!-- NAVBAR IMPORT -->
+<div th:replace="~{base :: navbar}"></div>
 
-<form action="#" th:action="@{/students/save}" th:object="${student}" method="post">
+<!-- PAGE CONTENT -->
+<div class="content-section">
 
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" /><br><br>
+    <div class="custom-card">
 
-    <label>Email:</label>
-    <input type="email" th:field="*{email}" /><br><br>
+        <h3 class="mb-4 text-center">Add Student</h3>
 
-    <label>Course:</label>
-    <input type="text" th:field="*{course}" /><br><br>
+        <form th:action="@{/students/save}" method="post" th:object="${student}">
 
-    <button type="submit">Save</button>
-</form>
+            <!-- Full Name -->
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="name" class="form-control"
+                       placeholder="Enter student name" required>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control"
+                       placeholder="Enter email" required>
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="text" name="phone" class="form-control"
+                       placeholder="Enter phone" required>
+            </div>
+
+            <!-- Course -->
+            <div class="mb-3">
+                <label class="form-label">Course</label>
+                <input type="text" name="course" class="form-control"
+                       placeholder="Enter course" required>
+            </div>
+
+            <!-- Gender -->
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <select name="gender" class="form-control" required>
+                    <option value="">Select gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <!-- DOB -->
+            <div class="mb-3">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" name="dob" class="form-control" required>
+            </div>
+
+            <!-- Enrollment Date -->
+            <div class="mb-3">
+                <label class="form-label">Enrollment Date</label>
+                <input type="date" name="enrollmentDate" class="form-control" required>
+            </div>
+
+            <!-- Notes -->
+            <div class="mb-3">
+                <label class="form-label">Notes</label>
+                <textarea name="notes" rows="3" class="form-control"
+                          placeholder="Enter notes"></textarea>
+            </div>
+
+            <!-- Address -->
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <textarea name="address" rows="3" class="form-control"
+                          placeholder="Enter address"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-2">
+                Save Student
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

@@ -11,16 +11,10 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
-    @Override
-    public Student addStudent(Student student) {
-        return studentRepository.save(student);
-    }
-
-    @Override
-    public Student getStudentById(Long id) {
-        return studentRepository.findById(id).orElse(null);
+    public StudentServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
     @Override
@@ -29,17 +23,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student updateStudent(Long id, Student studentDetails) {
-        Student student = studentRepository.findById(id).orElse(null);
+    public Student getStudentById(Long id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+    }
 
-        if (student != null) {
-            student.setName(studentDetails.getName());
-            student.setEmail(studentDetails.getEmail());
-            student.setCourse(studentDetails.getCourse());
-            return studentRepository.save(student);
-        }
-
-        return null;
+    @Override
+    public Student save(Student student) {
+        return studentRepository.save(student);
     }
 
     @Override
