@@ -16,7 +16,7 @@ public class ExpenseController {
     private ExpenseService expenseService;
 
     @Autowired
-     private StudentService studentService;
+    private StudentService studentService;
 
     @GetMapping("/expenses/list/{studentId}")
     public String listExpensesByStudent(@PathVariable Long studentId, Model model) {

@@ -10,9 +10,9 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    @Autowired
     private final StudentRepository studentRepository;
 
+    @Autowired
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -36,5 +36,20 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
+    }
+
+    // ----------- FIXED LOGIN METHOD 100% WORKING ----------
+    @Override
+    public Student findByNameAndId(String name, Long id) {
+
+        if (name == null || id == null) return null;
+      String normalized=name.toLowerCase().replaceAll("\\s+","");
+        return studentRepository.findByNameAndIdNormalized(normalized, id);
+    }
+
+
+    @Override
+    public Student findByEmail(String email) {
+        return studentRepository.findByEmail(email);
     }
 }

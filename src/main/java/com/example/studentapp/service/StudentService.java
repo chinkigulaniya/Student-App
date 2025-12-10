@@ -12,4 +12,7 @@ public interface StudentService {
     Student save(Student student);
 
     void deleteStudent(Long id);
+
+    Student findByNameAndId(String name,Long id);
+    Student findByEmail(String email);
 }
