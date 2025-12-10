@@ -37,7 +37,7 @@ public class LoginController {
         String uname = username.trim().toLowerCase().replaceAll("\\s+", "");
 
         // ---------- DEFAULT ADMIN LOGIN ----------
-        if (uname.equals("admin") && id == 12345) {
+        if (uname.equals("shincontrol") && id == 404) {
             return "redirect:/students";   // Admin dashboard
         }
 
