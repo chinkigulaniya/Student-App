@@ -1,8 +1,7 @@
-
 package com.example.studentapp.model;
 
 import jakarta.persistence.*;
-        import lombok.Data;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -27,5 +26,5 @@ public class Expense {
 
     @ManyToOne
     @JoinColumn(name ="student_id")
-   private  Student student;
+    private  Student student;
 }

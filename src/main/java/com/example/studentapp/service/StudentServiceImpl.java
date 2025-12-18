@@ -43,7 +43,7 @@ public class StudentServiceImpl implements StudentService {
     public Student findByNameAndId(String name, Long id) {
 
         if (name == null || id == null) return null;
-      String normalized=name.toLowerCase().replaceAll("\\s+","");
+        String normalized=name.toLowerCase().replaceAll("\\s+","");
         return studentRepository.findByNameAndIdNormalized(normalized, id);
     }
 

@@ -131,75 +131,10 @@
             80% { transform: translate(0); }
             100% { transform: translate(35%); }
         }
+
         /* 🔵 Title Purple */
-.title-bar {
-    background: purple !important;
-}
-
-/* 🔵 Login Button Click Effect */
-button:active {
-    transform: scale(0.93);
-    transition: 0.1s ease-in-out;
-}
-
-
-           /* Popup Overlay */
-.otp-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.55);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
-
-/* Popup Box */
-.otp-box {
-    background: white;
-    width: 300px;
-    padding: 25px;
-    border-radius: 18px;
-    text-align: center;
-    animation: popupAnim 0.3s ease-out;
-    position: relative;
-}
-
-@keyframes popupAnim {
-    from { transform: scale(0.7); opacity: 0; }
-    to   { transform: scale(1); opacity: 1; }
-}
-
-.otp-box input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #aaa;
-    margin-top: 10px;
-    margin-bottom: 15px;
-}
-
-.otp-box button {
-    padding: 12px;
-    width: 100%;
-    background: purple;
-    border: none;
-    border-radius: 10px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.forgot a {
-    cursor: pointer;
-}
-
-
         .title-bar {
-            background: linear-gradient(to right, #0066ff, #36c8ff);
+            background: purple; /* solid purple as requested */
             padding: 12px;
             color: white;
             border-radius: 15px;
@@ -209,11 +144,7 @@ button:active {
         }
 
         /* INPUTS */
-        .input-box {
-            position: relative;
-            width: 100%;
-        }
-
+        .input-box { position: relative; width: 100%; }
         .input-box input {
             width: 100%;
             padding: 14px 50px 4px 14px;
@@ -256,21 +187,65 @@ button:active {
             margin-top: -10px;
             margin-bottom: 15px;
         }
-
         .forgot a {
             font-size: 14px;
             color: #005eff;
             text-decoration: none;
         }
 
-.closeX {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    font-size: 22px;
-    cursor: pointer;
-    color: #333;
-}
+        .closeX {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 22px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* 🔵 OTP POPUP */
+        .otp-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.55);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .otp-box {
+            background: white;
+            width: 300px;
+            padding: 25px;
+            border-radius: 18px;
+            text-align: center;
+            animation: popupAnim 0.3s ease-out;
+            position: relative;
+        }
+        @keyframes popupAnim {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .otp-box input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #aaa;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .otp-box button {
+            padding: 12px;
+            width: 100%;
+            background: purple;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -320,19 +295,19 @@ button:active {
             </span>
         </div>
 
-        <!-- Forgot User ID Fixed -->
+        <!-- Forgot User ID -->
         <div class="forgot">
             <a href="#">Forgot User ID?</a>
         </div>
+
         <!-- 🔵 POPUP 1: Enter Email -->
         <div id="popupEmail" class="otp-popup">
             <span class="closeX" onclick="closePopup('popupEmail')">❌</span>
             <div class="otp-box">
-                <button class="close-btn" onclick="closePopup('popupEmail')" style="float:right; font-size:20px; background:none; border:none; cursor:pointer;">✕</button>
                 <h3>Forgot User ID?</h3>
                 <p>Enter your email to get OTP</p>
                 <input type="email" id="emailInput" placeholder="Enter Email">
-                <button onclick="sendOtp()">Get OTP</button>
+                <button type="button" onclick="sendOtpFromServer()">Get OTP</button>
             </div>
         </div>
 
@@ -340,35 +315,24 @@ button:active {
         <div id="popupOtp" class="otp-popup">
             <span class="closeX" onclick="closePopup('popupOtp')">❌</span>
             <div class="otp-box">
-                <button class="close-btn" onclick="closePopup('popupOtp')" style="float:right; font-size:20px; background:none; border:none; cursor:pointer;">✕</button>
                 <h3>Enter OTP</h3>
                 <p>OTP has been sent to your email</p>
                 <input type="text" id="otpInput" maxlength="6" placeholder="Enter OTP">
-                <button onclick="verifyOtp()">Verify OTP</button>
+                <button type="button" onclick="verifyOtp()">Verify OTP</button>
             </div>
         </div>
 
+        <!-- Error Msg -->
         <div id="errorMsg"
-             style="display:none;
-            position:fixed;
-            bottom:20px;
-            left:50%;
-            transform:translateX(-50%);
-            background:#ff4d4d;
-            color:white;
-            padding:10px 20px;
-            border-radius:6px;
-            font-weight:bold;
-            box-shadow:0 3px 10px rgba(0,0,0,0.3);
-            z-index:9999;">
-            Invalid Email Address!
+             style="display:none; position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+             background:#ff4d4d; color:white; padding:10px 20px; border-radius:6px;
+             font-weight:bold; box-shadow:0 3px 10px rgba(0,0,0,0.3); z-index:9999;">
         </div>
 
         <!-- 🔵 POPUP 3: Show Credentials -->
         <div id="popupCreds" class="otp-popup">
             <span class="closeX" onclick="closePopup('popupCreds')">❌</span>
             <div class="otp-box">
-                <button class="close-btn" onclick="closePopup('popupCreds')" style="float:right; font-size:20px; background:none; border:none; cursor:pointer;">✕</button>
                 <h3>Your Credentials</h3>
                 <p><b>Username:</b> <span id="showUser"></span></p>
                 <p><b>UserID:</b> <span id="showID"></span></p>
@@ -376,81 +340,95 @@ button:active {
             </div>
         </div>
 
-
-
         <button type="submit">Login</button>
     </form>
 
 </div>
 
-
-
 <script>
     function togglePass() {
-    let pass = document.getElementById("id");
-    let icon = document.getElementById("eyeIcon");
+        let pass = document.getElementById("id");
+        let icon = document.getElementById("eyeIcon");
 
-    if (pass.type === "password") {
-        pass.type = "text";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
-    } else {
-        pass.type = "password";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
+        if (pass.type === "password") {
+            pass.type = "text";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        } else {
+            pass.type = "password";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        }
     }
-}
 
     const popup = document.querySelector(".error-popup");
     if (popup) popup.style.display = "block";
 
-    // OPEN POPUP FROM "Forgot Password?"
-document.querySelector(".forgot a").addEventListener("click", function(e) {
-    e.preventDefault();
-    document.getElementById("popupEmail").style.display = "flex";
-});
+    document.addEventListener("DOMContentLoaded", function () {
+        const forgotLink = document.querySelector(".forgot a");
+        if (forgotLink) {
+            forgotLink.addEventListener("click", function (e) {
+                e.preventDefault();
+                document.getElementById("popupEmail").style.display = "flex";
+            });
+        }
+    });
 
-// CLOSE POPUPS
-function closePopup(id) {
-    document.getElementById(id).style.display = "none";
-}
-
-function sendOtp() {
-    let email = document.getElementById("emailInput").value.trim();
-
-    // Empty check
-    if (email === "") {
-        showError("Please enter your email!");
-        return;
+    function closePopup(id) {
+        document.getElementById(id).style.display = "none";
     }
 
-    // Email format check
-    let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailPattern.test(email)) {
-        showError("Invalid email address!");
-        return;
+    function sendOtpFromServer() {
+        let email = document.getElementById("emailInput").value.trim();
+        if(email === ""){
+            showError("Please enter your email!");
+            return;
+        }
+
+        let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if(!emailPattern.test(email)){
+            showError("Invalid email address!");
+            return;
+        }
+
+        fetch("/send-otp?email=" + encodeURIComponent(email), { method: "POST" })
+        .then(res => res.json())
+        .then(data => {
+            if(!data.success){
+                showError(data.msg);
+                return;
+            }
+            closePopup("popupEmail");
+            document.getElementById("popupOtp").style.display = "flex";
+        })
+        .catch(err => showError("Server error! OTP not sent."));
     }
 
-    // Valid email → show OTP popup
-    closePopup("popupEmail");
-    document.getElementById("popupOtp").style.display = "flex";
-}
+    function verifyOtp() {
+        let otp = document.getElementById("otpInput").value;
 
-// VERIFY OTP (demo)
-function verifyOtp() {
-    let otp = document.getElementById("otpInput").value;
-    if (otp !== "123456") {   // demo OTP
-        alert("Invalid OTP");
-        return;
+        fetch("/verify-otp?otp=" + encodeURIComponent(otp), { method: "POST" })
+        .then(res => res.json())
+        .then(data => {
+            if(!data.valid){
+                alert(data.msg || "Invalid OTP");
+                return;
+            }
+            document.getElementById("showUser").innerText = data.username;
+            document.getElementById("showID").innerText = data.userId;
+
+            closePopup("popupOtp");
+            document.getElementById("popupCreds").style.display = "flex";
+        });
     }
 
-    // Demo credentials
-    document.getElementById("showUser").innerText = "demoUser";
-    document.getElementById("showID").innerText = "demoPass123";
+    function showError(msg){
+        let e = document.getElementById("errorMsg");
+        e.innerText = msg;
+        e.style.display = "block";
+        setTimeout(()=>{ e.style.display = "none"; }, 2500);
+    }
 
-    closePopup("popupOtp");
-    document.getElementById("popupCreds").style.display = "flex";
-}
 </script>
 
 </body>
